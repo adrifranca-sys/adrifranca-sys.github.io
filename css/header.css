@@ -1,0 +1,173 @@
+header {
+    /* Fundo branco com 85% de opacidade */
+    background-color: rgba(255, 255, 255, 0.85); 
+    
+    /* O "Pulo do Gato": aplica o desfoque no que estiver por trás do menu */
+    backdrop-filter: blur(12px); 
+    -webkit-backdrop-filter: blur(12px); /* Suporte para navegadores Safari */
+    
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    color: var(--primary-color);
+    line-height: 1;
+    text-align: center;
+}
+
+.logo-mark {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 2.2rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    line-height: 0.9;
+}
+
+.logo-subtitle {
+    font-size: 0.68rem;
+    color: var(--text-light);
+    letter-spacing: 0.08em;
+    line-height: 1.1;
+}
+
+.logo:hover .logo-mark {
+    color: var(--accent-color);
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.menu-toggle {
+    display: none;
+    width: 46px;
+    height: 46px;
+    border: 1px solid rgba(15, 23, 42, 0.12);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.9);
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.menu-toggle span {
+    width: 20px;
+    height: 2px;
+    background-color: var(--primary-color);
+    border-radius: 999px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* ================= Efeito de Linha Animada nos Links ================= */
+.nav-links a {
+    position: relative;
+    padding-bottom: 5px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--accent-color);
+}
+
+/* Criando a linha invisível que fica debaixo do texto */
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--accent-color);
+    transition: width 0.3s ease;
+}
+
+/* A linha cresce para 100% da largura quando o mouse passa por cima */
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+/* ================= Responsividade ================= */
+@media (max-width: 768px) {
+    nav {
+        padding: 16px 20px;
+    }
+
+    .menu-toggle {
+        display: inline-flex;
+    }
+
+    .nav-links {
+        position: absolute;
+        top: calc(100% + 12px);
+        right: 20px;
+        left: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        background: rgba(255, 255, 255, 0.96);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        border-radius: 18px;
+        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        pointer-events: none;
+        transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+    }
+
+    .nav-links a {
+        display: block;
+        padding: 14px 20px;
+    }
+
+    .nav-links a::after {
+        display: none;
+    }
+
+    nav.menu-open .nav-links {
+        max-height: 320px;
+        opacity: 1;
+        pointer-events: auto;
+        padding: 8px 0;
+    }
+
+    nav.menu-open .menu-toggle span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+    }
+
+    nav.menu-open .menu-toggle span:nth-child(2) {
+        opacity: 0;
+    }
+
+    nav.menu-open .menu-toggle span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+    }
+}
